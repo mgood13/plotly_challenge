@@ -1,6 +1,7 @@
 var titleInit = d3.select("#userID");
 var temptitle = titleInit.text();
 titleInit.text(temptitle + " ---")
+console.log('test')
 
 d3.json("samples.json").then((sampleData) => {
     var names = sampleData.names;
@@ -15,7 +16,7 @@ d3.json("samples.json").then((sampleData) => {
         var element = select.append("option");
         element.text(dataID);
     });
-
+console.log("what about here")
 
 
     select.on('change', function() {
@@ -31,6 +32,7 @@ d3.json("samples.json").then((sampleData) => {
         };
         titletag.text(temp + " " +  userID)
 
+        console.log("anything?")
         mdata.forEach((participant)=>{
             if (userID == participant.id){
                 var list = d3.select(".demographics");
@@ -91,22 +93,39 @@ d3.json("samples.json").then((sampleData) => {
             };
         });
 
+        console.log('print this')
         samples.forEach((sample) => {
 
             var templist = d3.select("#tempList");
-
+            console.log('HERE')
             if(userID == sample.id) {
                 var ids = sample.otu_ids.slice(0,10);
                 var magnitudes = sample.sample_values.slice(0,10);
                 var bactNames = sample.otu_labels.slice(0,10);
+                console.log("HELLO:" + magnitudes)
+
+                var data = [{
+                values: magnitudes,
+                labels: ids,
+                type: "bar"
+                }];
+
+                var layout = {
+                height: 600,
+                width: 800
+                };
+
+                Plotly.newPlot("bar", data,layout);
 
 
+
+                /*
                 for (var j=0; j < ids.length; j++){
                     var post = templist.append('li');
                     post.text("ID: " + ids[j] + " Value: " + magnitudes[j] + " Name: " + bactNames[j])
 
                 };
-
+                */
             };
         });
 
