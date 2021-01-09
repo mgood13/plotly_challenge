@@ -28,8 +28,6 @@ d3.json("samples.json").then((sampleData) => {
         return;
 
         };
-
-
         titletag.text(temp + " " +  userID)
 
         mdata.forEach((participant)=>{
@@ -39,7 +37,6 @@ d3.json("samples.json").then((sampleData) => {
                 var values = Object.values(participant);
 
                 for (var i=0; i < keys.length; i++){
-                    console.log(i)
                     switch(i){
                         case 1:
                             var item = list.append('li');
@@ -90,6 +87,23 @@ d3.json("samples.json").then((sampleData) => {
                 };
             };
         });
+
+        samples.forEach((sample) => {
+            var templist = d3.select("#tempList");
+            if(userID == sample.id) {
+                var ids = sample.otu_ids.slice(0,10);
+                var magnitudes = sample.sample_values.slice(0,10);
+                var bactNames = sample.otu_labels.slice(0,10);
+
+                for (var j=0; j < ids.length; j++){
+                    var post = templist.append('li');
+                    post.text("ID: " + ids[j] + " Value: " + magnitudes[j] + " Name: " + bactNames[j])
+
+                };
+
+            };
+        });
+
 
 });
 
