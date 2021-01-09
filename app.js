@@ -19,6 +19,7 @@ d3.json("samples.json").then((sampleData) => {
 
 
     select.on('change', function() {
+    d3.select("#tempList").selectAll('li').remove()
         var titletag = d3.select("#userID");
         var temp = titletag.text().split(' ');
         temp.pop();
@@ -83,17 +84,22 @@ d3.json("samples.json").then((sampleData) => {
 
 
 
+
+
                     }
                 };
             };
         });
 
         samples.forEach((sample) => {
+
             var templist = d3.select("#tempList");
+
             if(userID == sample.id) {
                 var ids = sample.otu_ids.slice(0,10);
                 var magnitudes = sample.sample_values.slice(0,10);
                 var bactNames = sample.otu_labels.slice(0,10);
+
 
                 for (var j=0; j < ids.length; j++){
                     var post = templist.append('li');
