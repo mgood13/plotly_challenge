@@ -1,7 +1,6 @@
 var titleInit = d3.select("#userID");
 var temptitle = titleInit.text();
 titleInit.text(temptitle + " ---")
-console.log('test')
 
 d3.json("samples.json").then((sampleData) => {
     var names = sampleData.names;
@@ -16,7 +15,7 @@ d3.json("samples.json").then((sampleData) => {
         var element = select.append("option");
         element.text(dataID);
     });
-console.log("what about here")
+
 
 
     select.on('change', function() {
@@ -32,7 +31,7 @@ console.log("what about here")
         };
         titletag.text(temp + " " +  userID)
 
-        console.log("anything?")
+
         mdata.forEach((participant)=>{
             if (userID == participant.id){
                 var list = d3.select(".demographics");
@@ -45,38 +44,62 @@ console.log("what about here")
                             var item = list.append('li');
                             var key = keys[i];
                             key = key.charAt(0).toUpperCase() + key.slice(1);
-                            item.text(key + ": " + values[i])
+                            item.style("font-weight",700)
+                            .text(key)
+                            .append("tspan")
+                            .style("font-weight", 300)
+                            .text(": " + values[i])
                         break;
 
                         case 2:
                             var item = list.append('li');
                             var key = keys[i];
                             key = key.charAt(0).toUpperCase() + key.slice(1);
-                            item.text(key + ": " + values[i])
+                            item.style("font-weight",700)
+                            .text(key)
+                            .append("tspan")
+                            .style("font-weight", 300)
+                            .text(": " + values[i])
                         break;
 
                         case 3:
                             var item = list.append('li');
                             var key = keys[i];
                             key = key.charAt(0).toUpperCase() + key.slice(1);
-                            item.text(key + ": " + values[i])
+                            item.style("font-weight",700)
+                            .text(key)
+                            .append("tspan")
+                            .style("font-weight", 300)
+                            .text(": " + values[i])
                         break;
 
                         case 4:
                             var item = list.append('li');
                             var key = keys[i];
                             key = key.charAt(0).toUpperCase() + key.slice(1);
-                            item.text(key + ": " + values[i])
+                            item.style("font-weight",700)
+                            .text(key)
+                            .append("tspan")
+                            .style("font-weight", 300)
+                            .text(": " + values[i])
                         break;
 
                         case 5:
                             var item = list.append('li');
-                            item.text("Belly Button Type: " + values[i])
+                            item.style("font-weight",700)
+                            .text("Belly Button Type")
+                            .append("tspan")
+                            .style("font-weight", 300)
+                            .text(": " + values[i])
                         break;
 
                         case 6:
                             var item = list.append('li');
-                            item.text("Washing Frequency (Scrubs per week): " + values[i])
+                            item.style("font-weight",700)
+                            .text("Washing Frequency (Scrubs per week)")
+                            .append("tspan")
+                            .style("font-weight", 300)
+                            .text(": " + values[i])
 
                         break;
 
@@ -93,29 +116,37 @@ console.log("what about here")
             };
         });
 
-        console.log('print this')
+
         samples.forEach((sample) => {
 
             var templist = d3.select("#tempList");
-            console.log('HERE')
             if(userID == sample.id) {
                 var ids = sample.otu_ids.slice(0,10);
                 var magnitudes = sample.sample_values.slice(0,10);
                 var bactNames = sample.otu_labels.slice(0,10);
-                console.log("HELLO:" + magnitudes)
+                var x_id = [];
+
+
+                for (var i = 0; i< ids.length; i++){
+                    x_id.push("OTU " + ids[i])
+                };
+
 
                 var data = [{
-                values: magnitudes,
-                labels: ids,
-                type: "bar"
+                x: magnitudes,
+                y: x_id,
+                type: "bar",
+                orientation: 'h',
+                text: bactNames
                 }];
 
                 var layout = {
-                height: 600,
-                width: 800
+                yaxis: {autorange: 'reversed'},
+                title: 'Most Common Bacteria Strains'
                 };
 
                 Plotly.newPlot("bar", data,layout);
+                return;
 
 
 
