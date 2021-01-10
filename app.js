@@ -225,9 +225,6 @@ d3.json("samples.json").then((sampleData) => {
                     givenPath ='M 0.5 0.46 L 0.9 0.5 L 0.5 0.54 Z'
                 };
 
-
-
-
                 var layout={
                 shapes: [
                             {
@@ -252,12 +249,44 @@ d3.json("samples.json").then((sampleData) => {
 
                 var data = [traceA];
                 Plotly.newPlot("gauge", data,layout);
+
+                var ids = sample.otu_ids.slice(0,10);
+                var magnitudes = sample.sample_values.slice(0,10);
+                var bactNames = sample.otu_labels.slice(0,10);
+
+
+                var bubbleTrace = {
+                    x: sample.otu_ids,
+                    y: sample.sample_values,
+                    mode: 'markers',
+                    marker: {
+                    size: sample.sample_values,
+                    color: sample.otu_ids
+                    },
+                    text: sample.otu_labels
+                };
+
+                var data = [bubbleTrace];
+                console.log(data)
+
+                var layout = {
+                title: 'Bacteria Population Bubble Chart',
+                showlegend: false,
+                xaxis:{title:{text:'OTU Labels'}},
+                yaxis:{title:{text:'Magnitude'}}
+                };
+
+                Plotly.newPlot("bubble", data, layout);
+
+
+
                 return;
 
 
 
             };
         });
+
 
 
 });
