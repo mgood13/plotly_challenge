@@ -146,17 +146,78 @@ d3.json("samples.json").then((sampleData) => {
                 };
 
                 Plotly.newPlot("bar", data,layout);
+
+
+
+                var traceA = {
+                type: "pie",
+                showlegend: false,
+                hole: 0.4,
+                rotation: 90,
+                values: [100 / 9, 100 / 9, 100 / 9, 100 / 9, 100 / 9, 100 / 9, 100 / 9, 100 / 9, 100 / 9, 100],
+                text: ["0-1", "1-2", "2-3", "3-4", "4-5","5-6","6-7", "7-8","8-9",  ""],
+                direction: "clockwise",
+                textinfo: "text",
+                textposition: "inside",
+                marker: {
+                colors: ["#fafaf5", "#e8ebd1", "#d3dcaf", "#c8d59e", "#aec87e","#92bb5f","#82b550","#60a832","#319b09", "white"]
+                },
+                labels: ["0-1", "1-2", "2-3", "3-4", "4-5","5-6","6-7", "7-8","8-9",  ""],
+                hoverinfo: "label"
+                };
+
+                var givenPath = 'M 0.5 0.46 L 0.1 0.5 L 0.5 0.54 Z'
+
+                var washFreq = mdata[6];
+                
+                if (washFreq > 0 && washFreq <= 4){
+
+                }
+                else if (washFreq > 4 && washFreq < 9) {
+                    var
+                }
+                else if (washFreq = 0){
+                    var givenPath =
+                }
+                else {
+                    var givenPath =
+                };
+
+
+
+
+                var layout={
+                shapes: [
+            {
+                type: 'circle',
+                x0: 0.45,
+                y0: 0.45,
+                x1: 0.55,
+                y1: 0.55,
+                fillcolor: '#73150C',
+                line: {
+                    width: 0
+                }
+            },
+            {
+                type:'path',
+                path: givenPath,
+                fillcolor: '#73150C',
+                line: {
+                    width: 0
+                    }
+
+            }
+                ]
+
+                }
+
+                var data = [traceA];
+                Plotly.newPlot("gauge", data,layout);
                 return;
 
 
 
-                /*
-                for (var j=0; j < ids.length; j++){
-                    var post = templist.append('li');
-                    post.text("ID: " + ids[j] + " Value: " + magnitudes[j] + " Name: " + bactNames[j])
-
-                };
-                */
             };
         });
 
