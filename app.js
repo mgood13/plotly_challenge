@@ -1,38 +1,58 @@
+// Initialize some variables that we will want to use later on, these are our global variables
 var titleInit = d3.select("#userID");
 var temptitle = titleInit.text();
 var washFreq;
+
+// Place a blank in the header in the panel containing the dropdown
 titleInit.text(temptitle + " ---")
 
+// Grab our data from the file THEN run everything else
 d3.json("samples.json").then((sampleData) => {
+
+    // Withdraw all of our data from the file for use in subsequent functions
     var names = sampleData.names;
     var mdata = sampleData.metadata;
     var samples = sampleData.samples;
 
+    // Select our option and place a --- as the first item
     var select = d3.select("#selDataset");
     var firstElement = select.append("option")
     firstElement.text('---')
 
+    //Loop through our names array and place an option in the dropdown for each of the IDs
+    // Call the current name 'dataID'
     names.forEach((dataID)=>{
         var element = select.append("option");
         element.text(dataID);
     });
 
 
-
+    // Run this code when a user makes a dropdown selection
     select.on('change', function() {
-    d3.select("#tempList").selectAll('li').remove()
+
+        // Take the title from the header and separate it out so that we can add our ID there
         var titletag = d3.select("#userID");
         var temp = titletag.text().split(' ');
+        // This tosses out the old ID when we make a different selection. Without this you would get an increasing
+        // list of IDs that you've previously selected.
         temp.pop();
+
+        // Put the array back together
         temp = temp.join(" ")
+
+        // Grab the user ID
+        // This item controls most of the rest of the code because it drives all of the plots
+        // this.value simply grabs the value property of the dropdown which is equal to the ID selected
         var userID = this.value
+
+        // If the item selected is the --- then nothing happens
         if (userID == '---') {
         return;
-
         };
+        // Add the user id to the title of the panel
         titletag.text(temp + " " +  userID)
 
-
+        // This function populates the demographics table
         mdata.forEach((participant)=>{
             if (userID == participant.id){
                 var list = d3.select(".demographics");
