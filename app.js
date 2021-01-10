@@ -1,5 +1,6 @@
 var titleInit = d3.select("#userID");
 var temptitle = titleInit.text();
+var washFreq;
 titleInit.text(temptitle + " ---")
 
 d3.json("samples.json").then((sampleData) => {
@@ -95,6 +96,7 @@ d3.json("samples.json").then((sampleData) => {
 
                         case 6:
                             var item = list.append('li');
+                            washFreq = values[i];
                             item.style("font-weight",700)
                             .text("Washing Frequency (Scrubs per week)")
                             .append("tspan")
@@ -168,19 +170,59 @@ d3.json("samples.json").then((sampleData) => {
 
                 var givenPath = 'M 0.5 0.46 L 0.1 0.5 L 0.5 0.54 Z'
 
-                var washFreq = mdata[6];
-                
+                console.log(washFreq)
+                console.log(typeof washFreq)
+
+
                 if (washFreq > 0 && washFreq <= 4){
+                    var angle = 20 * washFreq;
+                    var radians = angle * Math.PI/180;
+
+                    var y = 0.4 * Math.sin(radians);
+                    var x = 0.4 * Math.cos(radians);
+
+                    var pointX = 0.5 - x;
+                    var pointY = 0.5 + y;
+
+                    var sX = y/10;
+                    var sY = x/10;
+
+                    var x1 = 0.5 + sX;
+                    var y1 = 0.5 + sY;
+
+                    var x2 = 0.5 - sX;
+                    var y2 = 0.5 - sY;
+
+                    givenPath = `M ${x1} ${y1} L ${pointX} ${pointY} L ${x2} ${y2}`
 
                 }
                 else if (washFreq > 4 && washFreq < 9) {
-                    var
+                    var angle = 20 * (9-washFreq);
+                    var radians = angle * Math.PI/180;
+
+                    var y = 0.4 * Math.sin(radians);
+                    var x = 0.4 * Math.cos(radians);
+
+                    var pointX = 0.5 + x;
+                    var pointY = 0.5 + y;
+
+                    var sX = y/10;
+                    var sY = x/10;
+
+                    var x1 = 0.5 + sX;
+                    var y1 = 0.5 - sY;
+
+                    var x2 = 0.5 - sX;
+                    var y2 = 0.5 + sY;
+
+                    givenPath = `M ${x1} ${y1} L ${pointX} ${pointY} L ${x2} ${y2}`
+
                 }
-                else if (washFreq = 0){
-                    var givenPath =
+                else if (washFreq == 0 || washFreq == null){
+                    givenPath = 'M 0.5 0.46 L 0.1 0.5 L 0.5 0.54 Z'
                 }
                 else {
-                    var givenPath =
+                    givenPath ='M 0.5 0.46 L 0.9 0.5 L 0.5 0.54 Z'
                 };
 
 
@@ -188,29 +230,25 @@ d3.json("samples.json").then((sampleData) => {
 
                 var layout={
                 shapes: [
-            {
-                type: 'circle',
-                x0: 0.45,
-                y0: 0.45,
-                x1: 0.55,
-                y1: 0.55,
-                fillcolor: '#73150C',
-                line: {
-                    width: 0
-                }
-            },
-            {
-                type:'path',
-                path: givenPath,
-                fillcolor: '#73150C',
-                line: {
-                    width: 0
-                    }
+                            {
+                            type: 'circle',
+                            x0: 0.45,
+                            y0: 0.45,
+                            x1: 0.55,
+                            y1: 0.55,
+                            fillcolor: '#73150C',
+                            line: {width: 0}
+                            },
 
-            }
-                ]
-
-                }
+                            {
+                            type:'path',
+                            path: givenPath,
+                            fillcolor: '#73150C',
+                            line: {width: 0}
+                            }
+                        ],
+                        title: {text:'Washing Frequency'}
+                            }
 
                 var data = [traceA];
                 Plotly.newPlot("gauge", data,layout);
