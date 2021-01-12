@@ -173,7 +173,7 @@ d3.json("samples.json").then((sampleData) => {
                 // We only want the first 10 data points from each of these arrays.
                 var ids = sample.otu_ids.slice(0,10);
                 var magnitudes = sample.sample_values.slice(0,10);
-                var bactNames = sample.otu_labels.slice(0,10);\
+                var bactNames = sample.otu_labels.slice(0,10);
 
                 // Variable for our modified strings
                 var x_id = [];
@@ -360,7 +360,7 @@ d3.json("samples.json").then((sampleData) => {
                 title: 'Bacteria Population Bubble Chart',
                 showlegend: false,
                 xaxis:{title:{text:'OTU Labels'}},
-                yaxis:{title:{text:'Magnitude'}}
+                yaxis:{title:{text:'Number of Cultures Observed'}}
                 };
 
                 // Generate the plot
